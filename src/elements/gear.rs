@@ -1,9 +1,9 @@
 use crate::objects::items::Kind;
 use crate::objects::items::access_item;
+use super::traits::Traits;
 
-use super::traits::Traits;  // Import the ITEMS_BIB variable
 
-struct Gear {
+pub struct Gear {
     helmet: usize,
     chest: usize,
     legs: usize,
@@ -17,6 +17,20 @@ struct Gear {
 
 
 impl Gear {
+    pub fn new() -> Gear {
+        Gear {
+            helmet: 0,
+            chest: 0,
+            legs: 0,
+            boots: 0,
+            hands: 0,
+            weapon: 0,
+            off_hand: 0,
+            ring: 0,
+            necklace: 0
+        }
+    }
+
     pub fn equip(&mut self,item: usize) -> Option<usize> {
         if let Some(item_obj) = access_item(item){
             let item_kind: Kind = (*item_obj).kind;
@@ -39,7 +53,7 @@ impl Gear {
             }
     }
 
-    fn get_gear_traits(&self) -> Traits {
+    pub fn get_gear_traits(&self) -> Traits {
         let gear_trait = access_item(self.helmet).unwrap().traits +
         access_item(self.chest).unwrap().traits +
         access_item(self.legs).unwrap().traits +

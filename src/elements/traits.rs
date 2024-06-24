@@ -33,7 +33,45 @@ pub struct Traits {
     heatlh_regen: u16,
     stamina_regen: u16,
     speed: u16,
-    crit_chance: u8,
+    crit_chance: f32,
+}
+
+impl Traits {
+    pub fn new() -> Traits {
+        Traits {
+            fire_res: 0,
+            cold_res: 0,
+            light_res: 0,
+            dark_res: 0,
+            water_res: 0,
+            thunder_res: 0,
+            poison_res: 0,
+            bonus_health: 0,
+            bonus_mana: 0,
+            bonus_stamina: 0,
+            armor: 0,
+            damage: 0,
+            religion: 0,
+            stealth: 0,
+            medicine: 0,
+            intimidation: 0,
+            fire_dmg: 0,
+            cold_dmg: 0,
+            light_dmg: 0,
+            dark_dmg: 0,
+            water_dmg: 0,
+            thunder_dmg: 0,
+            poison_dmg: 0,
+            piercing_dmg: 0,
+            spell_dmg: 0,
+            spell_res: 0,
+            mana_regen: 0,
+            heatlh_regen: 0,
+            stamina_regen: 0,
+            speed: 0,
+            crit_chance: 0.0,
+        }
+    }
 }
 
 impl Add for Traits {

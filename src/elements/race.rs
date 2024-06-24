@@ -1,5 +1,6 @@
 use crate::elements::stats::Stats;
 
+#[derive(Clone, Copy)]
 pub enum Race {
     Human,
     Elf,

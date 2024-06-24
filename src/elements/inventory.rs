@@ -1,5 +1,5 @@
 
-struct Inventory {
+pub struct Inventory {
     capacity: u16,
     load: u16,
     items: Vec<usize>,
@@ -7,7 +7,7 @@ struct Inventory {
 }
 
 impl Inventory {
-    fn new(capacity: u16) -> Inventory {
+    pub fn new(capacity: u16) -> Inventory {
         Inventory {
             capacity,
             load: 0,
