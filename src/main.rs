@@ -1,8 +1,12 @@
 mod elements;
 mod objects;
-mod utils;
 mod character;
+mod cli;
+
+use clap::Parser;
+use cli::Cli;
 
 fn main() {
-
+    let cli = Cli::parse();
+    cli.execute();
 }

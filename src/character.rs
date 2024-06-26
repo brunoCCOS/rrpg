@@ -7,6 +7,9 @@ use crate::{elements::{
     },
     objects::items::Item};
 
+
+
+const POINTS_PER_LEVEL:u8 = 5;
 enum Pool {
     Mana,
     Health,
@@ -37,34 +40,29 @@ impl Character{
             race,
             stats: race.attributes(),
             age,
-            health: Character::set_pool_max(Pool::Health,race.attributes()),
-            mana: Character::set_pool_max(Pool::Mana,race.attributes()),
-            stamina: Character::set_pool_max(Pool::Stamina,race.attributes()),
+            health: Character::set_pool_max(Pool::Health,&race.attributes()),
+            mana: Character::set_pool_max(Pool::Mana,&race.attributes()),
+            stamina: Character::set_pool_max(Pool::Stamina,&race.attributes()),
             invetory: Inventory::new(10), //TODO implement a mechanism to calculate strength
             gear: Gear::new(),
             traits: Traits::new()
         }
     }
 
-    fn spent_points(&self, points: u16) -> Stats {
-
-    }
-
-    pub fn level_up(&self) -> () {
-        self.level += 1;
-        self.stats += spent_points(5);
-        self.health =  Character::set_pool_max(Pool::Health,self.stats);
-        self.mana = Character::set_pool_max(Pool::Mana,self.stats);
-        self.stamina =  Character::set_pool_max(Pool::Stamina,self.stats);
-        ()
-    }
+    pub fn spend_level_points(&mut self, points: Stats) {
+        self.level += points.get_level();
+        self.stats += points;
+        self.health =  Character::set_pool_max(Pool::Health,&self.stats);
+        self.mana = Character::set_pool_max(Pool::Mana,&self.stats);
+        self.stamina =  Character::set_pool_max(Pool::Stamina,&self.stats);
+            // Implement logic to apply points to stats or abilities
+        }
 
     pub fn age_up(&mut self) -> () {
         self.age += 1;
-        ()
     }
 
-    fn set_pool_max( pool: Pool,stats: Stats)-> u16{
+    fn set_pool_max( pool: Pool,stats: &Stats)-> u16{
         match pool {
             Pool::Health => 100 + 10*stats.constitution + 5*stats.strength,
             Pool::Stamina => 100 + 10*stats.constitution + 5*stats.dexterity,
