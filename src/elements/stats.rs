@@ -1,4 +1,6 @@
 use std::ops::{Add, AddAssign};
+
+#[derive(Debug,Clone)]
 pub struct Stats {
     pub strength: u16,
     pub dexterity: u16,

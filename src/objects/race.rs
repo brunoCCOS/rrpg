@@ -1,6 +1,6 @@
 use crate::elements::stats::Stats;
 
-#[derive(Clone, Copy)]
+#[derive(Debug,Clone, Copy)]
 pub enum Race {
     Human,
     Elf,
@@ -15,6 +15,7 @@ pub enum Race {
     Troll,
     Dryad,
 }
+
 
 impl Race {
     pub fn attributes(&self) -> Stats {

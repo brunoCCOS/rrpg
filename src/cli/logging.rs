@@ -2,7 +2,7 @@ use core::fmt;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 #[derive(Debug, PartialEq)]
-enum LogLevel {
+pub enum LogLevel {
     Debug,
     Info,
     Warning,
@@ -38,18 +38,18 @@ impl LogMessage {
     }
 }
 
-struct Logger {
+pub struct Logger {
     messages: Vec<LogMessage>,
 }
 
 impl Logger {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Logger {
             messages: Vec::new(),
         }
     }
 
-    fn log(&mut self, level: LogLevel, message: &str) {
+    pub fn log(&mut self, level: LogLevel, message: &str) {
         let log_message = LogMessage::new(level, message);
         log_message.printlog();
         self.messages.push(log_message);
@@ -80,6 +80,4 @@ impl Logger {
             msg.printlog();
         }
     }
-
-
 }

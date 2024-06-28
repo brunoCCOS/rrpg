@@ -1,8 +1,5 @@
-// src/cli/roll_dice.rs
-use clap::Args;
 use crate::elements::dice::DiceRoll;
 
-#[derive(Args)]
 pub struct RollDiceArgs {
     pub num_dice: u32,
     pub num_faces: u32,

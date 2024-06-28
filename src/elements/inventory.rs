@@ -1,4 +1,4 @@
-
+#[derive(Debug,Clone)]
 pub struct Inventory {
     capacity: u16,
     load: u16,

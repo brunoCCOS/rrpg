@@ -1,13 +1,11 @@
-use crate::{elements::{
+use crate::elements::{
         gear::Gear,
         inventory::Inventory,
-        race::Race,
         stats::Stats,
         traits::Traits
-    },
-    objects::items::Item};
+    };
 
-
+use crate::objects::race::Race;
 
 const POINTS_PER_LEVEL:u8 = 5;
 enum Pool {
@@ -16,6 +14,7 @@ enum Pool {
     Stamina
 }
 
+#[derive(Debug,Clone)]
 pub struct Character {
     name: String,
     level: u16,

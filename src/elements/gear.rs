@@ -2,7 +2,7 @@ use crate::objects::items::Kind;
 use crate::objects::items::access_item;
 use super::traits::Traits;
 
-
+#[derive(Debug,Clone)]
 pub struct Gear {
     helmet: usize,
     chest: usize,

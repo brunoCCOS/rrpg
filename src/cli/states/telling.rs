@@ -1,42 +1,25 @@
-#[derive(Debug)]
+
+#[derive(Debug, Clone)]
 pub enum TellingCommands {
-    Speak { message: String },
-    Examine { item: String },
-    MoveTo { location: String },
     EquipItem { item_name: String },
     UnequipItem { item_name: String },
-    EquipSpell { spell_name: String },
-    UnequipSpell { spell_name: String },
+    EquipMove { spell_name: String },
+    UnequipMove { spell_name: String },
     SpendLevelPoints { points: u32 },
     DropItem { item_name: String },
     PickupItem { item_name: String },
 }
 
-#[derive(Debug,Clone)]
-pub struct TellingState {
-    pub characters: Vec<Character>,
-    pub narrative: String,
-}
+#[derive(Debug, Clone)]
+pub struct TellingState {}
 
 impl TellingState {
-    pub fn new(characters: Vec<Character>, narrative: String) -> Self {
-        TellingState { characters, narrative }
+    pub fn new() -> Self {
+        TellingState {}
     }
 
-    pub fn execute_command(&mut self, command: TellingCommands) {
+    pub fn execute_command(&self, command: TellingCommands) {
         match command {
-            TellingCommands::Speak { message } => {
-                println!("Speaking: {}", message);
-                // Implement speaking logic
-            }
-            TellingCommands::Examine { item } => {
-                println!("Examining {}", item);
-                // Implement examining logic
-            }
-            TellingCommands::MoveTo { location } => {
-                println!("Moving to {}", location);
-                // Implement movement logic
-            }
             TellingCommands::EquipItem { item_name } => {
                 println!("Equipping item: {}", item_name);
                 // Implement equip item logic
@@ -45,11 +28,11 @@ impl TellingState {
                 println!("Unequipping item: {}", item_name);
                 // Implement unequip item logic
             }
-            TellingCommands::EquipSpell { spell_name } => {
+            TellingCommands::EquipMove { spell_name } => {
                 println!("Equipping spell: {}", spell_name);
                 // Implement equip spell logic
             }
-            TellingCommands::UnequipSpell { spell_name } => {
+            TellingCommands::UnequipMove { spell_name } => {
                 println!("Unequipping spell: {}", spell_name);
                 // Implement unequip spell logic
             }

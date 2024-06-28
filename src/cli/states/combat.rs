@@ -1,5 +1,6 @@
-// src/state/combat.rs
-#[derive(Debug)]
+use crate::character::Character;
+
+#[derive(Debug, Clone)]
 pub enum CombatCommands {
     Attack { target: String },
     Move { x: i32, y: i32 },
@@ -7,11 +8,10 @@ pub enum CombatCommands {
     Flee,
 }
 
-
-#[derive(Debug,Clone)]
+#[derive(Debug, Clone)]
 pub struct CombatState {
     pub characters: Vec<Character>,
-    pub enemies: Vec<Character>, // Assuming enemies are also represented by the Character struct
+    pub enemies: Vec<Character>,
 }
 
 impl CombatState {
@@ -19,7 +19,7 @@ impl CombatState {
         CombatState { characters, enemies }
     }
 
-    pub fn execute_command(&mut self, command: CombatCommands) {
+    pub fn execute_command(&self, command: CombatCommands) {
         match command {
             CombatCommands::Attack { target } => {
                 println!("Attacking {}", target);
