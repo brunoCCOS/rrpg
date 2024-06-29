@@ -1,16 +1,40 @@
-use super::states::{combat::CombatCommands,telling::TellingCommands};
+use std::fmt;
 use std::str::FromStr;
 
+#[derive(Debug)]
 pub enum Command {
-    Telling(TellingCommands),
-    Combat(CombatCommands),
+    Telling(String),
+    Combat(String),
 }
 
-#[derive(Debug)]
 pub enum CommandParseError {
     InvalidCommand,
     InvalidArguments,
 }
+
+// Implement the Display trait for CommandParseError
+impl fmt::Display for CommandParseError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            CommandParseError::InvalidCommand => write!(f, "Invalid command"),
+            CommandParseError::InvalidArguments => write!(f, "Invalid arguments"),
+        }
+    }
+}
+
+// Implement the Debug trait for CommandParseError (optional, but good practice)
+impl fmt::Debug for CommandParseError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            CommandParseError::InvalidCommand => write!(f, "CommandParseError::InvalidCommand"),
+            CommandParseError::InvalidArguments => write!(f, "CommandParseError::InvalidArguments"),
+        }
+    }
+}
+
+// Implement the std::error::Error trait for CommandParseError
+impl std::error::Error for CommandParseError {}
+
 
 impl FromStr for Command {
     type Err = CommandParseError;
@@ -24,74 +48,67 @@ impl FromStr for Command {
         match parts[0].to_lowercase().as_str() {
             "attack" => {
                 if parts.len() != 2 {
+                    println!("{:?}, {}", parts[0].to_lowercase().as_str(), parts.len());
                     return Err(CommandParseError::InvalidArguments);
                 }
-                Ok(Command::Combat(CombatCommands::Attack { target: parts[1].to_string() }))
-            }
-            "move" => {
-                if parts.len() != 3 {
-                    return Err(CommandParseError::InvalidArguments);
-                }
-                let x = parts[1].parse::<i32>().map_err(|_| CommandParseError::InvalidArguments)?;
-                let y = parts[2].parse::<i32>().map_err(|_| CommandParseError::InvalidArguments)?;
-                Ok(Command::Combat(CombatCommands::Move { x, y }))
+                Ok(Command::Combat(input.to_owned()))
             }
             "useitem" => {
                 if parts.len() != 2 {
                     return Err(CommandParseError::InvalidArguments);
                 }
-                Ok(Command::Combat(CombatCommands::UseItem { item_name: parts[1].to_string() }))
+                Ok(Command::Combat(input.to_owned()))
             }
             "flee" => {
                 if parts.len() != 1 {
                     return Err(CommandParseError::InvalidArguments);
                 }
-                Ok(Command::Combat(CombatCommands::Flee))
+                Ok(Command::Combat(input.to_owned()))
             }
             "equipitem" => {
                 if parts.len() != 2 {
                     return Err(CommandParseError::InvalidArguments);
                 }
-                Ok(Command::Telling(TellingCommands::EquipItem { item_name: parts[1].to_string() }))
+                Ok(Command::Telling(input.to_owned()))
             }
             "unequipitem" => {
                 if parts.len() != 2 {
                     return Err(CommandParseError::InvalidArguments);
                 }
-                Ok(Command::Telling(TellingCommands::UnequipItem { item_name: parts[1].to_string() }))
+                Ok(Command::Telling(input.to_owned()))
             }
             "equipmove" => {
                 if parts.len() != 2 {
                     return Err(CommandParseError::InvalidArguments);
                 }
-                Ok(Command::Telling(TellingCommands::EquipMove { spell_name: parts[1].to_string() }))
+                Ok(Command::Telling(input.to_owned()))
             }
             "unequipmove" => {
                 if parts.len() != 2 {
                     return Err(CommandParseError::InvalidArguments);
                 }
-                Ok(Command::Telling(TellingCommands::UnequipMove { spell_name: parts[1].to_string() }))
+                Ok(Command::Telling(input.to_owned()))
             }
             "spendlevelpoints" => {
                 if parts.len() != 2 {
                     return Err(CommandParseError::InvalidArguments);
                 }
                 let points = parts[1].parse::<u32>().map_err(|_| CommandParseError::InvalidArguments)?;
-                Ok(Command::Telling(TellingCommands::SpendLevelPoints { points }))
+                Ok(Command::Telling(input.to_owned()))
             }
             "dropitem" => {
                 if parts.len() != 2 {
                     return Err(CommandParseError::InvalidArguments);
                 }
-                Ok(Command::Telling(TellingCommands::DropItem { item_name: parts[1].to_string() }))
+                Ok(Command::Telling(input.to_owned()))
             }
             "pickupitem" => {
                 if parts.len() != 2 {
                     return Err(CommandParseError::InvalidArguments);
                 }
-                Ok(Command::Telling(TellingCommands::PickupItem { item_name: parts[1].to_string() }))
+                Ok(Command::Telling(input.to_owned()))
             }
-            _ => Err(CommandParseError::InvalidCommand),
+            _ => {Err(CommandParseError::InvalidCommand)},
         }
     }
 }

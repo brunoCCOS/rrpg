@@ -7,3 +7,6 @@ edition = "2021"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 rand = "0.8"  # Make sure to check for the latest version on crates.io
+tokio = { version = "1.0", features = ["full"] }
+tokio-tungstenite = "0.15.0"
+bytes = "1.0.0"

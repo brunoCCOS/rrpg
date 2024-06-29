@@ -1,55 +1,48 @@
 pub mod states;
-pub mod logging;
-pub mod roll_dice;
 pub mod parser;
 
-use parser::Command;
-use states::{telling::TellingState, State};
-use logging::LogLevel::{Info,Warning,Debug,Error,Critical};
+use parser::{Command, CommandParseError};
+use states::State;
 pub struct Cli {
     state: states::State,
-    logger: logging::Logger
 }
 
 impl Cli {
     pub fn new() -> Cli {
-        Cli { state: State::Telling(TellingState::new()),
-            logger: logging::Logger::new() }
+        Cli { state: State::Telling }
     }
 
-    fn handle_command(&mut self, cmd: Command) {
+    fn handle_command(&mut self, cmd: Command,) -> Result<(), CommandParseError> {
         match &self.state {
-            State::Combat(state) => {
+            State::Combat => {
                 match cmd {
-                    Command::Combat(combat_cmd) => {
-                        // Call the execute method on combat state
-                        state.execute_command(combat_cmd);
+                    Command::Combat(_) => {
+                        // Return Ok for valid command
+                        Ok(())
                     }
                     _ => {
                         // Command is not a CombatCommand
-                        self.logger.log(Error, "Command is not valid in combat stage");
+                        Err(CommandParseError::InvalidCommand)
                     }
                 }
             }
-            State::Telling(state) => {
+            State::Telling => {
                 match cmd {
-                    Command::Telling(telling_cmd) => {
-                        // Call the execute method on telling state
-                        state.execute_command(telling_cmd);
+                    Command::Telling(_) => {
+                        // Return Ok for valid command
+                        Ok(())
                     }
                     _ => {
                         // Command is not a TellingCommand
-                        self.logger.log(Error, "Command is not valid outside combat");
+                        Err(CommandParseError::InvalidCommand)
                     }
                 }
             }
         }
     }
 
-    pub fn execute(&mut self, input: &str) {
-        match input.parse::<Command>()  {
-            Ok(command) =>self.handle_command(command),
-            Err(err) => self.logger.log(Error, &format!("parsing command '{}': {:?}", input, err))
-        }
+    pub fn execute(&mut self, input: &str) -> Result<(),CommandParseError> {
+        let command =  input.parse::<Command>()?;
+        self.handle_command(command)
     }
 }

@@ -7,7 +7,6 @@ use crate::elements::{
 
 use crate::objects::race::Race;
 
-const POINTS_PER_LEVEL:u8 = 5;
 enum Pool {
     Mana,
     Health,

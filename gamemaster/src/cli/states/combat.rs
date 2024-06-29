@@ -1,4 +1,3 @@
-use crate::character::Character;
 
 #[derive(Debug, Clone)]
 pub enum CombatCommands {
@@ -10,13 +9,11 @@ pub enum CombatCommands {
 
 #[derive(Debug, Clone)]
 pub struct CombatState {
-    pub characters: Vec<Character>,
-    pub enemies: Vec<Character>,
 }
 
 impl CombatState {
-    pub fn new(characters: Vec<Character>, enemies: Vec<Character>) -> Self {
-        CombatState { characters, enemies }
+    pub fn new() -> Self {
+        CombatState {}
     }
 
     pub fn execute_command(&self, command: CombatCommands) {
